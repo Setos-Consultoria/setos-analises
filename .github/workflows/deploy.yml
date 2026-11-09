@@ -1,3 +1,4 @@
+# Publica o site no GitHub Pages usando o workflow padrão da Setos (Setos-Consultoria/.github).
 name: Publicar no GitHub Pages
 
 on:
@@ -10,26 +11,6 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: withastro/action@v5
-        with:
-          node-version: 22
-          package-manager: pnpm@10.21.0
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+  pages:
+    uses: Setos-Consultoria/.github/.github/workflows/pages.yml@main
