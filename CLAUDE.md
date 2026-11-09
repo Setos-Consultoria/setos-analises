@@ -17,5 +17,5 @@ Site **público** de análises da Setos Consultoria, publicado no **GitHub Pages
 ## Regras
 - Toda análise mostra **data, fontes e ressalvas**. Não reescreva análise antiga com dado novo: crie outra com a data atual.
 - Pesquise em fontes oficiais primeiro; quando divergirem, diga isso na página.
-- Identidade visual atual (`src/styles/setos.css`) é **provisória**: o brand kit da Setos está em escolha no repositório `setos-brand`. Quando for escolhido, aplique só via tokens/variáveis CSS.
+- Identidade visual atual (`src/styles/setos.css`) é **provisória**. Finalistas da marca: **Sombra Fresca** e **Cerca Viva** (cópia em `brand/`, fonte da verdade no repositório privado `setos-brand`). Quando a final for escolhida, aplique só via tokens (`--setos-*` do `tokens.css`) em `src/styles/setos.css`. Não edite `brand/` à mão: atualize no `setos-brand` e copie de novo.
 - Textos em português do Brasil.

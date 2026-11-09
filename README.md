@@ -23,6 +23,10 @@ Páginas de análise da **Setos Consultoria**, usadas para apresentar a clientes
 
 A página inicial lista as análises automaticamente, da mais recente para a mais antiga.
 
+## Marca
+
+`brand/` tem uma **cópia** das finalistas da marca Setos (Sombra Fresca e Cerca Viva): logos, símbolos, `tokens.css` e `tokens.json`. A fonte da verdade é o repositório privado `setos-brand`; quando a marca final for escolhida, ela é aplicada aqui via `src/styles/setos.css`.
+
 ## Stack
 
 - [Astro](https://astro.build) 6 (site estático, sem servidor). Funciona com Node 22.12+.

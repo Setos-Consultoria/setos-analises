@@ -1,0 +1,48 @@
+/* Setos · Cerca Viva (Tecnológico · sistemas) · finalista de 09/11/2026
+ * Fontes: <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+ * Tema: claro por padrão; escuro pelo sistema ou por data-theme="dark" no <html>.
+ */
+:root {
+  --setos-bg: #F2F5F5; /* fundo da página */
+  --setos-surface: #FFFFFF; /* cartões e superfícies */
+  --setos-ink: #0D1B1E; /* texto principal */
+  --setos-muted: #4C5E62; /* texto secundário */
+  --setos-foliage: #138A6E; /* cor principal da marca */
+  --setos-foliage2: #0B5A48; /* cor principal, tom 2 */
+  --setos-shade: #D3E0DE; /* sombra, fundos suaves, chips */
+  --setos-accent: #2F6BFF; /* destaque (pontual) */
+  --setos-button: #0B5A48;
+  --setos-button-text: #FFFFFF;
+  --setos-font-display: 'Sora', Georgia, serif;
+  --setos-font-display-weight: 700;
+  --setos-font-body: 'Sora', system-ui, sans-serif;
+  --setos-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --setos-bg: #081315; /* fundo da página */
+    --setos-surface: #0F1D20; /* cartões e superfícies */
+    --setos-ink: #E6F0EF; /* texto principal */
+    --setos-muted: #97AEAE; /* texto secundário */
+    --setos-foliage: #2CC79E; /* cor principal da marca */
+    --setos-foliage2: #1A8C70; /* cor principal, tom 2 */
+    --setos-shade: #18292C; /* sombra, fundos suaves, chips */
+    --setos-accent: #6E98FF; /* destaque (pontual) */
+    --setos-button: #2CC79E;
+    --setos-button-text: #081315;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --setos-bg: #081315; /* fundo da página */
+  --setos-surface: #0F1D20; /* cartões e superfícies */
+  --setos-ink: #E6F0EF; /* texto principal */
+  --setos-muted: #97AEAE; /* texto secundário */
+  --setos-foliage: #2CC79E; /* cor principal da marca */
+  --setos-foliage2: #1A8C70; /* cor principal, tom 2 */
+  --setos-shade: #18292C; /* sombra, fundos suaves, chips */
+  --setos-accent: #6E98FF; /* destaque (pontual) */
+  --setos-button: #2CC79E;
+  --setos-button-text: #081315;
+  color-scheme: dark;
+}

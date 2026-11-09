@@ -1,0 +1,47 @@
+/* Setos · Sombra Fresca (Original · acolhedor) · finalista de 09/11/2026
+ * Fontes: <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Figtree:wght@400;500;600&display=swap">
+ * Tema: claro por padrão; escuro pelo sistema ou por data-theme="dark" no <html>.
+ */
+:root {
+  --setos-bg: #EEF2EA; /* fundo da página */
+  --setos-surface: #FFFFFF; /* cartões e superfícies */
+  --setos-ink: #14271F; /* texto principal */
+  --setos-muted: #4B5E54; /* texto secundário */
+  --setos-foliage: #2E6A4E; /* cor principal da marca */
+  --setos-foliage2: #5E9C74; /* cor principal, tom 2 */
+  --setos-shade: #C9D8C8; /* sombra, fundos suaves, chips */
+  --setos-accent: #D99A2B; /* destaque (pontual) */
+  --setos-button: #2E6A4E;
+  --setos-button-text: #FFFFFF;
+  --setos-font-display: 'Fraunces', Georgia, serif;
+  --setos-font-display-weight: 600;
+  --setos-font-body: 'Figtree', system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --setos-bg: #0F1C16; /* fundo da página */
+    --setos-surface: #16261E; /* cartões e superfícies */
+    --setos-ink: #EAF1EA; /* texto principal */
+    --setos-muted: #A9BCAF; /* texto secundário */
+    --setos-foliage: #6FB98C; /* cor principal da marca */
+    --setos-foliage2: #9AD4AE; /* cor principal, tom 2 */
+    --setos-shade: #24392D; /* sombra, fundos suaves, chips */
+    --setos-accent: #F0B54A; /* destaque (pontual) */
+    --setos-button: #9AD4AE;
+    --setos-button-text: #0F1C16;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --setos-bg: #0F1C16; /* fundo da página */
+  --setos-surface: #16261E; /* cartões e superfícies */
+  --setos-ink: #EAF1EA; /* texto principal */
+  --setos-muted: #A9BCAF; /* texto secundário */
+  --setos-foliage: #6FB98C; /* cor principal da marca */
+  --setos-foliage2: #9AD4AE; /* cor principal, tom 2 */
+  --setos-shade: #24392D; /* sombra, fundos suaves, chips */
+  --setos-accent: #F0B54A; /* destaque (pontual) */
+  --setos-button: #9AD4AE;
+  --setos-button-text: #0F1C16;
+  color-scheme: dark;
+}
