@@ -1,0 +1,186 @@
+---
+import Analise from '../../layouts/Analise.astro';
+import type { AnaliseMeta } from '../../lib/analises';
+
+export const meta: AnaliseMeta = {
+  titulo: 'Gateways de pagamento online no Brasil: taxas, prazos, meios aceitos e integração',
+  data: '2026-11-09',
+  categoria: 'Meios de pagamento',
+  resumo:
+    'Comparativo de 13 provedores para escolher o gateway do <strong>Snack</strong> (pedidos de pequenos restaurantes, ticket médio baixo e maioria em Pix). Serve também de referência para outros clientes da Setos.',
+  uso: 'decisão interna e apresentação a clientes',
+  destaques: [{ label: 'Provedores comparados', valor: '13' }],
+};
+---
+<Analise
+  meta={meta}
+  secoes={[
+    ['recomendacao', 'Recomendação'],
+    ['simulador', 'Simulador de custo'],
+    ['tabela', 'Tabela comparativa'],
+    ['detalhes', 'Provedor a provedor'],
+    ['metodo', 'Metodologia e fontes'],
+  ]}
+>
+  <section id="recomendacao" class="card">
+    <h2>Recomendação para o Snack</h2>
+    <p class="sub">Critérios: custo por pedido pequeno (≈ R$ 20), Pix barato, recebimento rápido e API com webhook para confirmar o pagamento automaticamente.</p>
+    <div class="grid-3">
+      <div class="rec first">
+        <div class="rank">1ª opção · menor custo</div>
+        <h3>InfinitePay</h3>
+        <p><b>Pix com taxa zero</b> e cartão a partir de ~4,20% com recebimento em 1 dia útil. Checkout por <b>link</b> (o cliente paga na página da InfinitePay e volta) com webhook. Contra: API nova e pouco documentada, sem checkout dentro do app e sem boleto.</p>
+      </div>
+      <div class="rec">
+        <div class="rank">2ª opção · melhor integração</div>
+        <h3>Mercado Pago</h3>
+        <p>Pix 0,99% na hora e cartão 4,99% (na hora) ou 3,99% (30 dias). <b>Checkout transparente</b> (o cliente paga dentro das telas do Snack, que já existem), SDK Node oficial, ambiente de testes e webhooks maduros. Custa ≈ R$ 0,20 por Pix de R$ 20.</p>
+      </div>
+      <div class="rec">
+        <div class="rank">3ª opção · pedir proposta</div>
+        <h3>Pagar.me (Stone)</h3>
+        <p>Cartão 4,19% com <b>recebimento em 1 dia</b> e Pix ~0,99–1,19%, API excelente. Exige aprovação comercial e as taxas são negociadas. Vale cotar quando o volume crescer.</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:16px">
+      <b>Evitar para ticket baixo:</b> provedores com <b>taxa fixa por Pix</b> (Asaas R$ 0,99–1,99; Vindi mínimo R$ 1,60). Num pedido de R$ 20 isso vira 5% a 10% do valor. Links sem API (Ton, SumUp) também não servem para o Snack, porque não confirmam o pagamento automaticamente no sistema.
+    </div>
+  </section>
+
+  <section id="simulador" class="card">
+    <h2>Simulador de custo mensal</h2>
+    <p class="sub">Usa as taxas de tabela (sem negociação) de cada provedor. Ajuste para a realidade do restaurante.</p>
+    <div class="sim">
+      <div>
+        <div class="field"><label for="ticket">Ticket médio <output id="ticketOut"></output></label><input type="number" id="ticket" min="1" step="0.5" value="20"></div>
+        <div class="field"><label for="pedidos">Pedidos online por mês <output id="pedidosOut"></output></label><input type="number" id="pedidos" min="1" step="10" value="1000"></div>
+        <div class="field"><label for="pix">Parcela em Pix <output id="pixOut"></output></label><input type="range" id="pix" min="0" max="100" step="5" value="70"></div>
+        <div class="field"><label for="prazo">Cartão: prazo de recebimento</label>
+          <select id="prazo" style="font:inherit;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)">
+            <option value="rapido">O mais rápido disponível</option>
+            <option value="barato">O mais barato (geralmente 30 dias)</option>
+          </select>
+        </div>
+        <p class="muted" style="font-size:12.5px;margin:0">Cartão considerado à vista. Provedores sem taxa publicada aparecem como "n/d".</p>
+      </div>
+      <div>
+        <div class="bars" id="bars" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tabela" class="card">
+    <h2>Tabela comparativa</h2>
+    <p class="sub">Clique no cabeçalho para ordenar. "Custo Pix/cartão" = quanto sai um pedido de R$ 20 em cada meio, com as taxas de tabela.</p>
+    <div class="table-wrap">
+      <table id="tbl">
+        <thead>
+          <tr>
+            <th data-k="nome">Provedor</th>
+            <th data-k="pixCusto">Pix</th>
+            <th data-k="cartaoCusto">Cartão à vista</th>
+            <th data-k="parcelado">Parcelado</th>
+            <th data-k="boleto">Boleto</th>
+            <th data-k="prazoTxt">Recebimento</th>
+            <th data-k="nMeios">Meios aceitos</th>
+            <th data-k="integ">Integração</th>
+            <th data-k="conf">Confiabilidade do dado</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="detalhes">
+    <h2 style="margin-bottom:14px">Provedor a provedor</h2>
+    <div class="prov-grid" id="provs"></div>
+  </section>
+
+  <section id="metodo" class="card">
+    <h2>Metodologia e ressalvas</h2>
+    <ul style="margin:0 0 14px;padding-left:20px;color:var(--ink-2)">
+      <li>Pesquisa feita em <b>09/11/2026</b> em páginas oficiais dos provedores e em comparativos publicados em 2026. Quando as fontes divergiam, usamos a página oficial; sem página oficial, o valor mais recente e citado por mais de uma fonte.</li>
+      <li>São <b>taxas de tabela</b> (sem negociação). Volume, ramo e tempo de conta mudam o valor; Pagar.me, Cielo, Getnet/Rede e afins trabalham com proposta comercial.</li>
+      <li>"Recebimento" é o prazo para o dinheiro ficar disponível. Prazo curto costuma custar mais; antecipação tem custo à parte.</li>
+      <li>"Integração" avalia o que o Snack precisa: API REST, webhook de confirmação, ambiente de testes (sandbox), SDK para Node.js e possibilidade de pagar sem sair do app (checkout transparente).</li>
+      <li>Antes de contratar, confirme as taxas no painel/contrato do provedor. Esta página não é oferta de nenhum deles e não tem link de afiliado.</li>
+    </ul>
+    <h3>Fontes</h3>
+    <ol class="src" id="fontes"></ol>
+  </section>
+</Analise>
+
+<script>
+  import '../../scripts/gateways.js';
+</script>
+
+<style is:global>
+  .grid-3 { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 860px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+  .rec { border-radius: 14px; padding: 18px; border: 1px solid var(--line); background: var(--surface-2); }
+  .rec .rank { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--brand-ink); }
+  .rec h3 { font-size: 20px; margin: 4px 0 6px; }
+  .rec p { margin: 0; color: var(--ink-2); font-size: 14px; }
+  .rec.first { background: var(--brand-soft); border-color: hsl(155 70% 70%); }
+
+  .callout { border-radius: 12px; padding: 14px 16px; background: var(--warn-bg); color: var(--ink); border: 1px solid hsl(38 80% 60% / .35); font-size: 14px; }
+  .callout b { color: var(--warn); }
+
+  /* tabela */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+  table { border-collapse: collapse; width: 100%; min-width: 980px; font-size: 13.5px; }
+  th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--surface-2); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-3); position: sticky; top: 0; cursor: pointer; white-space: nowrap; user-select: none; }
+  th[aria-sort="ascending"]::after { content: " ▲"; }
+  th[aria-sort="descending"]::after { content: " ▼"; }
+  tr:last-child td { border-bottom: 0; }
+  td.name { font-weight: 700; white-space: nowrap; }
+  td.name small { display: block; font-weight: 500; color: var(--ink-3); }
+  .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .muted { color: var(--ink-3); }
+  .chips { display: flex; flex-wrap: wrap; gap: 4px; }
+  .chip { font-size: 11.5px; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); white-space: nowrap; }
+  .tag { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .tag.good { background: var(--good-bg); color: var(--good); }
+  .tag.warn { background: var(--warn-bg); color: var(--warn); }
+  .tag.bad { background: var(--bad-bg); color: var(--bad); }
+  .stars { letter-spacing: 1px; color: var(--brand-ink); white-space: nowrap; }
+  .stars .off { color: var(--line); }
+
+  /* simulador */
+  .sim { display: grid; gap: 18px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .sim { grid-template-columns: 320px 1fr; } }
+  .field { display: grid; gap: 6px; margin-bottom: 14px; }
+  .field label { font-size: 13px; font-weight: 600; color: var(--ink-2); display: flex; justify-content: space-between; }
+  .field output { font-variant-numeric: tabular-nums; color: var(--brand-ink); font-weight: 700; }
+  input[type=number] { font: inherit; padding: 9px 11px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); width: 100%; }
+  input[type=range] { width: 100%; accent-color: hsl(155 80% 40%); }
+  .bars { display: grid; gap: 8px; }
+  .bar-row { display: grid; grid-template-columns: 140px 1fr 170px; align-items: center; gap: 10px; font-size: 13.5px; }
+  @media (max-width: 520px) { .bar-row { grid-template-columns: 92px 1fr 118px; font-size: 12.5px; } }
+  .bar-track { height: 22px; background: var(--surface-2); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; background: hsl(155 70% 45%); border-radius: 6px; min-width: 2px; transition: width .25s; }
+  .bar-row.na .bar-fill { background: var(--line); }
+  .bar-row .v { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+  .bar-row.na .v { color: var(--ink-3); font-weight: 500; }
+
+  /* detalhes */
+  .prov-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .prov-grid { grid-template-columns: 1fr 1fr; } }
+  .prov { border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: var(--surface); }
+  .prov header { display: flex; justify-content: space-between; align-items: start; gap: 10px; margin-bottom: 8px; }
+  .prov h3 { font-size: 17px; margin: 0; }
+  .prov .kind { font-size: 12px; color: var(--ink-3); }
+  .prov dl { display: grid; grid-template-columns: 112px 1fr; gap: 4px 10px; margin: 10px 0; font-size: 13.5px; }
+  .prov dt { color: var(--ink-3); }
+  .prov dd { margin: 0; }
+  .pc { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px; }
+  .pc ul { margin: 4px 0 0; padding-left: 18px; color: var(--ink-2); }
+  .pc .t { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  .pc .t.p { color: var(--good); } .pc .t.c { color: var(--bad); }
+
+  ol.src { font-size: 13px; color: var(--ink-2); padding-left: 20px; columns: 1; }
+  @media (min-width: 860px) { ol.src { columns: 2; column-gap: 36px; } }
+  ol.src li { break-inside: avoid; margin-bottom: 4px; overflow-wrap: anywhere; }
+</style>

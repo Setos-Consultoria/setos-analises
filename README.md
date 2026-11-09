@@ -1,23 +1,42 @@
 # setos-analises
 
-Repositório da **Setos Consultoria** com:
+Páginas de análise da **Setos Consultoria**, usadas para apresentar a clientes e para apoiar as nossas decisões.
 
-1. **Páginas de análise**: estudos usados para apresentar a clientes e para a Setos tomar decisões.
-2. **Dashboard da Setos** (futuro): o escopo **ainda precisa ser planejado em conjunto** (Matheus e Lucas). O planejamento fica no GitHub Project **"Setos Dashboard"**. Até lá, o repositório guarda só as análises.
+**Site:** https://setos-consultoria.github.io/setos-analises/
+
+> Repositório **público** (o GitHub Pages gratuito exige). Não coloque aqui dados de clientes, contratos, senhas ou números internos sigilosos.
+> O **Dashboard da Setos** fica em outro repositório, privado: `Setos-Consultoria/setos-dashboard`.
 
 ## Análises
 
-| Data | Análise | Arquivo |
-|---|---|---|
-| 09/11/2026 | Gateways de pagamento online no Brasil (13 provedores, simulador de custo, recomendação para o Snack) | [`analises/2026-11-09-gateways-de-pagamento/`](analises/2026-11-09-gateways-de-pagamento/index.html) |
+| Data | Análise |
+|---|---|
+| 09/11/2026 | [Gateways de pagamento online no Brasil](https://setos-consultoria.github.io/setos-analises/analises/2026-11-09-gateways-de-pagamento/): 13 provedores, simulador de custo e recomendação para o Snack |
 
-## Como ver
+## Como adicionar uma análise
 
-São páginas HTML estáticas, sem build: abra `index.html` no navegador (ou sirva a pasta com qualquer servidor estático, por exemplo `npx serve .`).
+1. Copie `src/pages/analises/_modelo.astro` para `src/pages/analises/AAAA-MM-DD-assunto.astro`.
+2. Preencha o `meta` (título, **data em que a análise foi feita**, categoria, resumo) e escreva as seções.
+3. Dados grandes (tabelas) podem ir em `src/data/`, e interatividade em `src/scripts/` (veja a análise de gateways como exemplo).
+4. Rode `pnpm dev` e abra http://localhost:4500/setos-analises/ para conferir.
+5. Faça push na `main`: o GitHub Actions publica sozinho no GitHub Pages em ~1 minuto.
+
+A página inicial lista as análises automaticamente, da mais recente para a mais antiga.
+
+## Stack
+
+- [Astro](https://astro.build) 6 (site estático, sem servidor). Funciona com Node 22.12+.
+- Layout e identidade visual da Setos em `src/layouts/` e `src/styles/setos.css` (verde-menta `hsl(155 100% 65%)`, verde-escuro `hsl(156 51% 14%)`, fonte Inter, tema claro e escuro).
+- Deploy: `.github/workflows/deploy.yml` (ação oficial `withastro/action` + `actions/deploy-pages`).
+
+```bash
+pnpm install
+pnpm dev      # http://localhost:4500/setos-analises/
+pnpm build    # gera dist/
+```
 
 ## Convenções
 
-- Uma pasta por análise em `analises/AAAA-MM-DD-assunto/`, com um `index.html` autocontido.
-- Toda análise mostra **a data em que foi feita**, as **fontes** e as **ressalvas** (taxas e preços mudam).
-- Identidade visual da Setos: verde-menta `hsl(155 100% 65%)`, verde-escuro `hsl(156 51% 14%)`, fonte Inter.
-- Ao adicionar uma análise, inclua o link no `index.html` da raiz e na tabela acima.
+- Toda análise mostra **a data em que foi feita**, as **fontes** e as **ressalvas** (preços e taxas mudam).
+- Nome do arquivo: `AAAA-MM-DD-assunto` (vira a URL).
+- Não reescreva análises antigas com dados novos: crie uma nova com a data atual e cite a anterior.

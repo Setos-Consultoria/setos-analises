@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import { dataBR, listarAnalises } from '../lib/analises';
+
+const analises = listarAnalises();
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+<Base title="Análises · Setos" description="Setos Consultoria · Análises para apresentar a clientes e apoiar decisões.">
+  <div class="hero">
+    <div class="wrap">
+      <span class="eyebrow">● Setos Consultoria</span>
+      <h1>Análises</h1>
+      <p>Estudos que a Setos usa para apresentar a clientes e para tomar decisões. Cada análise mostra a data em que foi feita e as fontes.</p>
+    </div>
+  </div>
+  <main class="wrap">
+    <ul class="lista">
+      {analises.map((a) => (
+        <li>
+          <a class="item" href={`${base}analises/${a.slug}/`}>
+            <span class="d">{dataBR(a.data)} · {a.categoria}</span>
+            <h2>{a.titulo}</h2>
+            <p set:html={a.resumo} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Base>
+
+<style>
+  .lista { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .item { display: block; text-decoration: none; color: inherit; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow); }
+  .item:hover { border-color: var(--brand-ink); }
+  .d { font-size: 12px; font-weight: 700; color: var(--brand-ink); text-transform: uppercase; letter-spacing: 0.06em; }
+  h2 { font-size: 19px; margin: 4px 0; }
+  p { margin: 0; color: var(--ink-3); font-size: 14px; }
+</style>

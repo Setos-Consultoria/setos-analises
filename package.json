@@ -1,0 +1,14 @@
+{
+  "name": "setos-analises",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.21.0",
+  "scripts": {
+    "dev": "astro dev --port 4500",
+    "build": "astro build",
+    "preview": "astro preview --port 4500"
+  },
+  "dependencies": {
+    "astro": "6.4.8"
+  }
+}

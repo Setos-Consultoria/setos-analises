@@ -1,0 +1,35 @@
+---
+/*
+ * MODELO de análise. Para criar uma nova:
+ * 1. Copie este arquivo para src/pages/analises/AAAA-MM-DD-assunto.astro (sem o "_" na frente).
+ * 2. Preencha o `meta` (a data é a data em que a análise foi feita).
+ * 3. Escreva as seções dentro de <Analise>. Ela aparece sozinha na página inicial.
+ * Arquivos que começam com "_" não viram página.
+ */
+import Analise from '../../layouts/Analise.astro';
+import type { AnaliseMeta } from '../../lib/analises';
+
+export const meta: AnaliseMeta = {
+  titulo: 'Título da análise',
+  data: '2026-01-01',
+  categoria: 'Categoria',
+  resumo: 'Uma ou duas frases dizendo o que foi analisado e para quê.',
+  uso: 'decisão interna e apresentação a clientes',
+  destaques: [{ label: 'Itens comparados', valor: '0' }],
+};
+---
+<Analise meta={meta} secoes={[['resumo', 'Resumo'], ['fontes', 'Fontes']]}>
+  <section id="resumo" class="card">
+    <h2>Resumo</h2>
+    <p class="sub">Conclusão principal e recomendação.</p>
+    <p>Texto da análise.</p>
+    <div class="callout"><b>Atenção:</b> ressalvas importantes.</div>
+  </section>
+
+  <section id="fontes" class="card">
+    <h2>Fontes</h2>
+    <ol>
+      <li><a href="https://exemplo.com" target="_blank" rel="noopener">Fonte 1</a></li>
+    </ol>
+  </section>
+</Analise>
