@@ -30,8 +30,8 @@ A página inicial lista as análises automaticamente, da mais recente para a mai
 ## Stack
 
 - [Astro](https://astro.build) 6 (site estático, sem servidor). Funciona com Node 22.12+.
-- Layout e identidade visual da Setos em `src/layouts/` e `src/styles/setos.css` (verde-menta `hsl(155 100% 65%)`, verde-escuro `hsl(156 51% 14%)`, fonte Inter, tema claro e escuro).
-- Deploy: `.github/workflows/deploy.yml` (ação oficial `withastro/action` + `actions/deploy-pages`).
+- Layout em `src/layouts/` e visual **provisório** em `src/styles/setos.css` (será trocado pela marca escolhida; ver `brand/`).
+- Deploy: `.github/workflows/deploy.yml` chama o workflow padrão da Setos `Setos-Consultoria/.github/.github/workflows/pages.yml`.
 
 ```bash
 pnpm install
