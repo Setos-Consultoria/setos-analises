@@ -17,5 +17,7 @@ Site **público** de análises da Setos Consultoria, publicado no **GitHub Pages
 ## Regras
 - Toda análise mostra **data, fontes e ressalvas**. Não reescreva análise antiga com dado novo: crie outra com a data atual.
 - Pesquise em fontes oficiais primeiro; quando divergirem, diga isso na página.
-- Identidade visual atual (`src/styles/setos.css`) é **provisória**. Finalistas da marca: **Sombra Fresca** e **Cerca Viva** (cópia em `brand/`, fonte da verdade no repositório privado `setos-brand`). Quando a final for escolhida, aplique só via tokens (`--setos-*` do `tokens.css`) em `src/styles/setos.css`. Não edite `brand/` à mão: atualize no `setos-brand` e copie de novo.
+- Marca: o site usa as finalistas **Sombra Fresca** (padrão) e **Cerca Viva**, com seletor no topo (`data-brand` no `<html>`, `?marca=<id>` na URL). Cópia em `brand/`; fonte da verdade no repositório privado `setos-brand`. Não edite `brand/`, `src/styles/marcas.css`, `src/data/marcas.json` nem `public/marca/` à mão: atualize no `setos-brand`, copie para `brand/` e rode `pnpm marca`.
+- Cores e fontes só por variável (`--brand`, `--brand-ink`, `--ink-3`, `--font-display`…, definidas em `src/styles/setos.css` sobre os tokens `--setos-*`). Nada de cor fixa (hex/hsl) nas páginas, fora os estados good/warn/bad.
+- Quando a marca final for escolhida: deixe só ela em `brand/` e rode `pnpm marca` (o seletor some com uma marca só).
 - Textos em português do Brasil.

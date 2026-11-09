@@ -1,0 +1,95 @@
+/* GERADO por scripts/sync-marca.mjs a partir de brand/. Não edite à mão. */
+
+/* Sombra Fresca (Original · acolhedor) */
+:root[data-brand="sombra-fresca"],
+:root:not([data-brand]) {
+  --setos-bg: #EEF2EA; /* fundo da página */
+  --setos-surface: #FFFFFF; /* cartões e superfícies */
+  --setos-ink: #14271F; /* texto principal */
+  --setos-muted: #4B5E54; /* texto secundário */
+  --setos-foliage: #2E6A4E; /* cor principal da marca */
+  --setos-foliage2: #5E9C74; /* cor principal, tom 2 */
+  --setos-shade: #C9D8C8; /* sombra, fundos suaves, chips */
+  --setos-accent: #D99A2B; /* destaque (pontual) */
+  --setos-button: #2E6A4E;
+  --setos-button-text: #FFFFFF;
+  --setos-font-display: 'Fraunces', Georgia, serif;
+  --setos-font-display-weight: 600;
+  --setos-font-body: 'Figtree', system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-brand="sombra-fresca"]:not([data-theme="light"]),
+  :root:not([data-brand]):not([data-theme="light"]) {
+    --setos-bg: #0F1C16; /* fundo da página */
+    --setos-surface: #16261E; /* cartões e superfícies */
+    --setos-ink: #EAF1EA; /* texto principal */
+    --setos-muted: #A9BCAF; /* texto secundário */
+    --setos-foliage: #6FB98C; /* cor principal da marca */
+    --setos-foliage2: #9AD4AE; /* cor principal, tom 2 */
+    --setos-shade: #24392D; /* sombra, fundos suaves, chips */
+    --setos-accent: #F0B54A; /* destaque (pontual) */
+    --setos-button: #9AD4AE;
+    --setos-button-text: #0F1C16;
+    color-scheme: dark;
+  }
+}
+:root[data-brand="sombra-fresca"][data-theme="dark"],
+:root:not([data-brand])[data-theme="dark"] {
+  --setos-bg: #0F1C16; /* fundo da página */
+  --setos-surface: #16261E; /* cartões e superfícies */
+  --setos-ink: #EAF1EA; /* texto principal */
+  --setos-muted: #A9BCAF; /* texto secundário */
+  --setos-foliage: #6FB98C; /* cor principal da marca */
+  --setos-foliage2: #9AD4AE; /* cor principal, tom 2 */
+  --setos-shade: #24392D; /* sombra, fundos suaves, chips */
+  --setos-accent: #F0B54A; /* destaque (pontual) */
+  --setos-button: #9AD4AE;
+  --setos-button-text: #0F1C16;
+  color-scheme: dark;
+}
+
+/* Cerca Viva (Tecnológico · sistemas) */
+:root[data-brand="cerca-viva"] {
+  --setos-bg: #F2F5F5; /* fundo da página */
+  --setos-surface: #FFFFFF; /* cartões e superfícies */
+  --setos-ink: #0D1B1E; /* texto principal */
+  --setos-muted: #4C5E62; /* texto secundário */
+  --setos-foliage: #138A6E; /* cor principal da marca */
+  --setos-foliage2: #0B5A48; /* cor principal, tom 2 */
+  --setos-shade: #D3E0DE; /* sombra, fundos suaves, chips */
+  --setos-accent: #2F6BFF; /* destaque (pontual) */
+  --setos-button: #0B5A48;
+  --setos-button-text: #FFFFFF;
+  --setos-font-display: 'Sora', Georgia, serif;
+  --setos-font-display-weight: 700;
+  --setos-font-body: 'Sora', system-ui, sans-serif;
+  --setos-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-brand="cerca-viva"]:not([data-theme="light"]) {
+    --setos-bg: #081315; /* fundo da página */
+    --setos-surface: #0F1D20; /* cartões e superfícies */
+    --setos-ink: #E6F0EF; /* texto principal */
+    --setos-muted: #97AEAE; /* texto secundário */
+    --setos-foliage: #2CC79E; /* cor principal da marca */
+    --setos-foliage2: #1A8C70; /* cor principal, tom 2 */
+    --setos-shade: #18292C; /* sombra, fundos suaves, chips */
+    --setos-accent: #6E98FF; /* destaque (pontual) */
+    --setos-button: #2CC79E;
+    --setos-button-text: #081315;
+    color-scheme: dark;
+  }
+}
+:root[data-brand="cerca-viva"][data-theme="dark"] {
+  --setos-bg: #081315; /* fundo da página */
+  --setos-surface: #0F1D20; /* cartões e superfícies */
+  --setos-ink: #E6F0EF; /* texto principal */
+  --setos-muted: #97AEAE; /* texto secundário */
+  --setos-foliage: #2CC79E; /* cor principal da marca */
+  --setos-foliage2: #1A8C70; /* cor principal, tom 2 */
+  --setos-shade: #18292C; /* sombra, fundos suaves, chips */
+  --setos-accent: #6E98FF; /* destaque (pontual) */
+  --setos-button: #2CC79E;
+  --setos-button-text: #081315;
+  color-scheme: dark;
+}

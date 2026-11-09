@@ -1,5 +1,6 @@
 ---
 import '../styles/setos.css';
+import marcas from '../data/marcas.json';
 
 interface Props {
   title: string;
@@ -7,6 +8,12 @@ interface Props {
 }
 const { title, description } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const padrao = marcas.find((m) => m.padrao) ?? marcas[0];
+// Mostra só o símbolo da marca ativa (data-brand no <html>).
+const cssSimbolos = marcas
+  .map((m) => `:root[data-brand="${m.id}"] .marca-simbolo[data-marca="${m.id}"]${m.padrao ? `, :root:not([data-brand]) .marca-simbolo[data-marca="${m.id}"]` : ''} { display: block; }`)
+  .join('\n');
+const ids = JSON.stringify(marcas.map((m) => m.id));
 ---
 <!doctype html>
 <html lang="pt-BR">
@@ -15,27 +22,63 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="icon" type="image/svg+xml" id="favicon" href={`${base}marca/${padrao.id}.svg`} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <script is:inline>
-      try { const t = localStorage.getItem('setos-theme'); if (t) document.documentElement.dataset.theme = t; } catch {}
+    {marcas.map((m) => <link href={m.googleFonts} rel="stylesheet" />)}
+    <style is:inline set:html={cssSimbolos} />
+    <script is:inline define:vars={{ ids, base }}>
+      // Marca: ?marca=<id> na URL (para mandar o link), senão a última escolhida, senão a padrão.
+      const lista = JSON.parse(ids);
+      const root = document.documentElement;
+      try {
+        const daUrl = new URLSearchParams(location.search).get('marca');
+        const salva = localStorage.getItem('setos-marca');
+        const m = [daUrl, salva].find((x) => x && lista.includes(x));
+        if (m) root.dataset.brand = m;
+        if (daUrl && lista.includes(daUrl)) localStorage.setItem('setos-marca', daUrl);
+        const t = localStorage.getItem('setos-theme');
+        if (t) root.dataset.theme = t;
+      } catch {}
+      if (!root.dataset.brand) root.dataset.brand = lista[0];
+      document.getElementById('favicon').href = base + 'marca/' + root.dataset.brand + '.svg';
     </script>
   </head>
   <body>
     <header class="top">
       <div class="wrap">
-        <a class="logo" href={base}><span class="logo-mark">S</span>Setos <small>Consultoria</small></a>
-        <button class="theme-btn" id="themeBtn" type="button" aria-label="Alternar tema claro/escuro">◐ Tema</button>
+        <a class="logo" href={base} aria-label="Setos Consultoria: todas as análises">
+          {marcas.map((m) => (
+            <svg class="marca-simbolo" data-marca={m.id} viewBox="0 0 64 64" aria-hidden="true" set:html={m.simbolo} />
+          ))}
+          <span class="logo-txt"><b>setos</b><small>Consultoria</small></span>
+        </a>
+        <div class="top-actions">
+          {marcas.length > 1 && (
+            <>
+              <span class="seg-label" id="segLabel">Marca em teste</span>
+              <div class="seg" role="group" aria-labelledby="segLabel">
+                {marcas.map((m) => (
+                  <button type="button" data-marca={m.id} aria-pressed={m.padrao ? 'true' : 'false'} title={m.linha}>{m.nome}</button>
+                ))}
+              </div>
+            </>
+          )}
+          <button class="theme-btn" id="themeBtn" type="button" aria-label="Alternar tema claro/escuro">◐ Tema</button>
+        </div>
       </div>
     </header>
     <slot />
     <footer class="foot">
-      <div class="wrap">Setos Consultoria · <a href={base}>Todas as análises</a></div>
+      <div class="wrap">
+        <span>Setos Consultoria · <a href={base}>Todas as análises</a></span>
+        <span id="marcaRodape"></span>
+      </div>
     </footer>
     <script>
+      import marcas from '../data/marcas.json';
       const root = document.documentElement;
+
       document.getElementById('themeBtn')?.addEventListener('click', () => {
         const dark = root.dataset.theme
           ? root.dataset.theme === 'dark'
@@ -43,6 +86,30 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         root.dataset.theme = dark ? 'light' : 'dark';
         try { localStorage.setItem('setos-theme', root.dataset.theme); } catch {}
       });
+
+      const botoes = [...document.querySelectorAll<HTMLButtonElement>('.seg button[data-marca]')];
+      const favicon = document.getElementById('favicon') as HTMLLinkElement | null;
+      const rodape = document.getElementById('marcaRodape');
+      const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+      function aplicar(id: string) {
+        root.dataset.brand = id;
+        botoes.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.marca === id)));
+        if (favicon) favicon.href = `${base}marca/${id}.svg`;
+        const m = marcas.find((x) => x.id === id);
+        if (rodape && m) rodape.textContent = `Marca em teste: ${m.nome} (${m.linha})`;
+      }
+      botoes.forEach((b) =>
+        b.addEventListener('click', () => {
+          const id = b.dataset.marca!;
+          aplicar(id);
+          try { localStorage.setItem('setos-marca', id); } catch {}
+          const url = new URL(location.href);
+          url.searchParams.set('marca', id);
+          history.replaceState(null, '', url);
+        }),
+      );
+      aplicar(root.dataset.brand || marcas[0].id);
     </script>
   </body>
 </html>

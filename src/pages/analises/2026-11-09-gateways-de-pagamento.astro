@@ -119,12 +119,12 @@ export const meta: AnaliseMeta = {
   .grid-3 { display: grid; gap: 14px; grid-template-columns: 1fr; }
   @media (min-width: 860px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
   .rec { border-radius: 14px; padding: 18px; border: 1px solid var(--line); background: var(--surface-2); }
-  .rec .rank { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--brand-ink); }
+  .rec .rank { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--brand-ink); }
   .rec h3 { font-size: 20px; margin: 4px 0 6px; }
   .rec p { margin: 0; color: var(--ink-2); font-size: 14px; }
-  .rec.first { background: var(--brand-soft); border-color: hsl(155 70% 70%); }
+  .rec.first { background: var(--brand-soft); border-color: color-mix(in oklab, var(--brand) 45%, transparent); }
 
-  .callout { border-radius: 12px; padding: 14px 16px; background: var(--warn-bg); color: var(--ink); border: 1px solid hsl(38 80% 60% / .35); font-size: 14px; }
+  .callout { border-radius: 12px; padding: 14px 16px; background: var(--warn-bg); color: var(--ink); border: 1px solid color-mix(in oklab, var(--warn) 30%, transparent); font-size: 14px; }
   .callout b { color: var(--warn); }
 
   /* tabela */
@@ -155,12 +155,12 @@ export const meta: AnaliseMeta = {
   .field label { font-size: 13px; font-weight: 600; color: var(--ink-2); display: flex; justify-content: space-between; }
   .field output { font-variant-numeric: tabular-nums; color: var(--brand-ink); font-weight: 700; }
   input[type=number] { font: inherit; padding: 9px 11px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); width: 100%; }
-  input[type=range] { width: 100%; accent-color: hsl(155 80% 40%); }
+  input[type=range] { width: 100%; accent-color: var(--brand); }
   .bars { display: grid; gap: 8px; }
   .bar-row { display: grid; grid-template-columns: 140px 1fr 170px; align-items: center; gap: 10px; font-size: 13.5px; }
   @media (max-width: 520px) { .bar-row { grid-template-columns: 92px 1fr 118px; font-size: 12.5px; } }
   .bar-track { height: 22px; background: var(--surface-2); border-radius: 6px; overflow: hidden; }
-  .bar-fill { height: 100%; background: hsl(155 70% 45%); border-radius: 6px; min-width: 2px; transition: width .25s; }
+  .bar-fill { height: 100%; background: var(--brand); border-radius: 6px; min-width: 2px; transition: width .25s; }
   .bar-row.na .bar-fill { background: var(--line); }
   .bar-row .v { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
   .bar-row.na .v { color: var(--ink-3); font-weight: 500; }

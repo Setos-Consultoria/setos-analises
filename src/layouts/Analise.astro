@@ -12,7 +12,7 @@ const { meta, secoes = [] } = Astro.props;
 <Base title={`${meta.titulo} · Setos`} description={`Setos Consultoria · ${meta.resumo} Análise feita em ${dataBR(meta.data)}.`}>
   <div class="hero">
     <div class="wrap">
-      <span class="eyebrow">● Análise · {meta.categoria}</span>
+      <span class="eyebrow">Análise · {meta.categoria}</span>
       <h1>{meta.titulo}</h1>
       <p set:html={meta.resumo} />
       <div class="meta">
