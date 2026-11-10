@@ -7,6 +7,8 @@ Páginas de análise da **Setos Consultoria**, usadas para apresentar a clientes
 > Repositório **público** (o GitHub Pages gratuito exige). Não coloque aqui dados de clientes, contratos, senhas ou números internos sigilosos.
 > O **Dashboard da Setos** fica em outro repositório, privado: `Setos-Consultoria/setos-dashboard`.
 
+**Acompanhamento:** GitHub Project [Setos Análises](https://github.com/orgs/Setos-Consultoria/projects/6) (fluxo a refinar na issue [#2](https://github.com/Setos-Consultoria/setos-analises/issues/2)).
+
 ## Análises
 
 | Data | Análise |

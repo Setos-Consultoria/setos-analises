@@ -3,6 +3,9 @@
 Site **público** de análises da Setos Consultoria, publicado no **GitHub Pages**: https://setos-consultoria.github.io/setos-analises/
 É só um conjunto de páginas de análise: **sem login, sem banco, sem dados de cliente ou números sigilosos** (o repositório é público).
 
+## Acompanhamento
+- GitHub Project **"Setos Análises"** (org Setos-Consultoria, project #6), ligado a este repositório. Cada análise nova vira uma issue aqui e entra no Project. O fluxo ainda vai ser refinado (issue #2).
+
 ## Stack
 - Astro 6, site estático. `pnpm dev` → http://localhost:4500/setos-analises/ · `pnpm build` → `dist/`.
 - `base: '/setos-analises'` no `astro.config.mjs`: links internos usam `import.meta.env.BASE_URL`.
